@@ -1,9 +1,22 @@
 import "./App.css";
+import Bar from "./components/Bar";
+import Sidebar from "./components/Sidebar";
+import Nav from "./components/Nav";
+import Centerblock from "./components/Centerblock";
+import Footer from "./components/Footer";
 
 function App() {
   return (
-    <div className="App">
-      <span className="test-text">Здесь скоро будет Skypro.Music</span>
+    <div className="wrapper">
+      <div className="container">
+        <main className="main">
+          <Nav />
+          <Centerblock />
+          <Sidebar />
+        </main>
+        <Bar />
+        <Footer />
+      </div>
     </div>
   );
 }
