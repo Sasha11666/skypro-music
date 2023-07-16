@@ -98,13 +98,13 @@ export const items = [
 function Playlist() {
   return (
     <div className="content__playlist playlist">
-      {items.map((item) => (
+      {items.map(({ id, title, author, album, time }) => (
         <PlayItem
-          key={item.id}
-          title={item.title}
-          author={item.author}
-          album={item.album}
-          time={item.time}
+          key={id}
+          title={title}
+          author={author}
+          album={album}
+          time={time}
         />
       ))}
     </div>
