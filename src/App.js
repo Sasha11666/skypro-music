@@ -9,10 +9,11 @@ import { useEffect, useState } from "react";
 function App() {
   const [loaded, setLoaded] = useState(false);
   useEffect(() => {
-    setTimeout(() => {
+    const timer = setTimeout(() => {
       setLoaded(true);
     }, 4000);
-  });
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <div className="wrapper">
