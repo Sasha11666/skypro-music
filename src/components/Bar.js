@@ -1,6 +1,12 @@
 import React from "react";
 
-function Bar() {
+function Bar({ loaded }) {
+  let style;
+  if (!loaded) {
+    style = "loading ";
+  } else {
+    style = "";
+  }
   return (
     <div className="bar">
       <div className="bar__content">
@@ -38,19 +44,25 @@ function Bar() {
             <div className="player__track-play track-play">
               <div className="track-play__contain">
                 <div className="track-play__image">
-                  <svg className="track-play__svg" alt="music">
-                    <use xlinkHref="/img/icon/sprite.svg#icon-note"></use>
-                  </svg>
+                  {loaded && (
+                    <svg className="track-play__svg" alt="music">
+                      <use xlinkHref="/img/icon/sprite.svg#icon-note"></use>
+                    </svg>
+                  )}
                 </div>
-                <div className="track-play__author">
-                  <a className="track-play__author-link" href="http://">
-                    Ты та...
-                  </a>
+                <div className={style + "track-play__author"}>
+                  {loaded && (
+                    <a className="track-play__author-link" href="http://">
+                      Ты та...
+                    </a>
+                  )}
                 </div>
-                <div className="track-play__album">
-                  <a className="track-play__album-link" href="http://">
-                    Баста
-                  </a>
+                <div className={style + "track-play__album"}>
+                  {loaded && (
+                    <a className="track-play__album-link" href="http://">
+                      Баста
+                    </a>
+                  )}
                 </div>
               </div>
 
