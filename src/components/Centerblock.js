@@ -1,37 +1,33 @@
 import React from "react";
 import Playlist from "./Playlist";
 import Filter from "./Filter";
+import * as S from "./Styles";
 
 function Centerblock({ loaded }) {
   return (
-    <div className="main__centerblock centerblock">
-      <div className="centerblock__search search">
-        <svg className="search__svg">
+    <S.MainCenterblock>
+      <S.CenterblockSearch>
+        <S.SearchSvg>
           <use xlinkHref="/img/icon/sprite.svg#icon-search"></use>
-        </svg>
-        <input
-          className="search__text"
-          type="search"
-          placeholder="Поиск"
-          name="search"
-        />
-      </div>
-      <h2 className="centerblock__h2">Треки</h2>
+        </S.SearchSvg>
+        <S.SearchText type="search" placeholder="Поиск" name="search" />
+      </S.CenterblockSearch>
+      <S.CenterblockHeading>Треки</S.CenterblockHeading>
       <Filter />
-      <div className="centerblock__content">
-        <div className="content__title playlist-title">
-          <div className="playlist-title__col col01">Трек</div>
-          <div className="playlist-title__col col02">ИСПОЛНИТЕЛЬ</div>
-          <div className="playlist-title__col col03">АЛЬБОМ</div>
-          <div className="playlist-title__col col04">
-            <svg className="playlist-title__svg" alt="time">
+      <S.CenterblockContent>
+        <S.ContentTitle>
+          <S.PlaylistTitle1>Трек</S.PlaylistTitle1>
+          <S.PlaylistTitle2>ИСПОЛНИТЕЛЬ</S.PlaylistTitle2>
+          <S.PlaylistTitle3>АЛЬБОМ</S.PlaylistTitle3>
+          <S.PlaylistTitle4>
+            <S.PlaylistTitleSvg alt="time">
               <use xlinkHref="/img/icon/sprite.svg#icon-watch"></use>
-            </svg>
-          </div>
-        </div>
+            </S.PlaylistTitleSvg>
+          </S.PlaylistTitle4>
+        </S.ContentTitle>
         <Playlist loaded={loaded} />
-      </div>
-    </div>
+      </S.CenterblockContent>
+    </S.MainCenterblock>
   );
 }
 

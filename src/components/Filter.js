@@ -3,6 +3,7 @@ import FirstFilterItem from "./FirstFilterItem";
 import { useState } from "react";
 import SecondFilterItem from "./SecondFilterItem";
 import ThirdFilterItem from "./ThirdFilterItem";
+import * as S from "./Styles";
 
 function Filter() {
   const [firstShown, setFirstShown] = useState(false);
@@ -10,8 +11,8 @@ function Filter() {
   const [thirdShown, setThirdShown] = useState(false);
 
   return (
-    <div className="centerblock__filter filter">
-      <div className="filter__title">Искать по:</div>
+    <S.CenterblockFilter>
+      <S.FilterTitle>Искать по:</S.FilterTitle>
       <FirstFilterItem
         firstShown={firstShown}
         setfirstShown={setFirstShown}
@@ -30,7 +31,7 @@ function Filter() {
         setSecondShown={setSecondShown}
         setfirstShown={setFirstShown}
       />
-    </div>
+    </S.CenterblockFilter>
   );
 }
 

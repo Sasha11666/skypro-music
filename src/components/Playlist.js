@@ -1,5 +1,6 @@
 import React from "react";
 import PlayItem from "./PlayItem";
+import * as S from "./Styles";
 
 export const items = [
   {
@@ -103,7 +104,7 @@ export const items = [
 
 function Playlist({ loaded }) {
   return (
-    <div className="content__playlist playlist">
+    <S.ContentPlaylist>
       {items.map(({ id, title, author, album, time }) => (
         <PlayItem
           key={id}
@@ -114,7 +115,7 @@ function Playlist({ loaded }) {
           loaded={loaded}
         />
       ))}
-    </div>
+    </S.ContentPlaylist>
   );
 }
 
