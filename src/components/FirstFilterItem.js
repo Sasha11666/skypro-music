@@ -1,5 +1,6 @@
 import React from "react";
 import { items } from "./Playlist";
+import * as S from "./Styles";
 
 function FirstFilterItem({
   firstShown,
@@ -7,35 +8,30 @@ function FirstFilterItem({
   setSecondShown,
   setThirdShown,
 }) {
-  let active;
-  if (firstShown) {
-    active = "active ";
-  } else {
-    active = "";
-  }
   return (
-    <div className="filter-item">
-      <div
+    <S.FilterItem>
+      <S.FilterButton
         onClick={() => {
           setfirstShown(!firstShown);
           setSecondShown(false);
           setThirdShown(false);
         }}
-        className={active + "filter__button button-author _btn-text"}
+        active={firstShown}
+        // className="_btn-text"
       >
         исполнителю
-      </div>
+      </S.FilterButton>
       {firstShown && (
-        <div className="options-container">
+        <S.OptionsContainer>
           {items.map(({ id, author }) => (
-            <div className="option">
-              <input type="radio" className="radio" id={id} name="category" />
+            <S.Option>
+              <S.OptionRadio type="radio" id={id} name="category" />
               <label htmlFor={id}>{author}</label>
-            </div>
+            </S.Option>
           ))}
-        </div>
+        </S.OptionsContainer>
       )}
-    </div>
+    </S.FilterItem>
   );
 }
 

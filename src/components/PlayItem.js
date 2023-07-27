@@ -1,57 +1,51 @@
 import React from "react";
+import * as S from "./Styles";
 
 function PlayItem({ title, author, album, time, loaded }) {
-  let style;
-  if (!loaded) {
-    style = "loading ";
-  } else {
-    style = "";
-  }
-
   return (
     <>
-      <div className="playlist__item">
-        <div className="playlist__track track">
-          <div className="track__title">
-            <div className="track__title-image">
+      <S.PlaylistItem>
+        <S.PlaylistTrack>
+          <S.TrackTitle>
+            <S.TrackTitleImg>
               {loaded && (
-                <svg className="track__title-svg" alt="music">
+                <S.TrackTitleSvg alt="music">
                   <use xlinkHref="/img/icon/sprite.svg#icon-note"></use>
-                </svg>
+                </S.TrackTitleSvg>
               )}
-            </div>
-            <div className={style + "track__title-text"}>
+            </S.TrackTitleImg>
+            <S.TrackTitleText loaded={loaded}>
               {loaded && (
-                <a className="track__title-link" href="http://">
-                  {title} <span className="track__title-span"></span>
-                </a>
+                <S.TrackTitleLink href="http://">
+                  {title} <S.TrackTitleSpan></S.TrackTitleSpan>
+                </S.TrackTitleLink>
               )}
-            </div>
-          </div>
-          <div className={style + "track__author"}>
+            </S.TrackTitleText>
+          </S.TrackTitle>
+          <S.TrackAuthor loaded={loaded}>
             {loaded && (
-              <a className="track__author-link" href="http://">
-                {author}
-              </a>
+              <S.TrackAuthorLink href="http://">{author}</S.TrackAuthorLink>
             )}
-          </div>
-          <div className={style + "track__album"}>
+          </S.TrackAuthor>
+          <S.TrackAlbum loaded={loaded}>
             {loaded && (
-              <a className="track__album-link" href="http://">
-                {album}
-              </a>
+              <S.TrackAlbumLink href="http://">{album}</S.TrackAlbumLink>
             )}
-          </div>
-          <div className="track__time">
+          </S.TrackAlbum>
+          <div>
             {loaded && (
-              <svg className="track__time-svg" alt="time">
+              <S.TrackTimeSvg alt="time">
                 <use xlinkHref="/img/icon/sprite.svg#icon-like"></use>
-              </svg>
+              </S.TrackTimeSvg>
             )}
-            {loaded && <span className="track__time-text">{time}</span>}
+            {loaded && (
+              <S.TrackTimeText className="track__time-text">
+                {time}
+              </S.TrackTimeText>
+            )}
           </div>
-        </div>
-      </div>
+        </S.PlaylistTrack>
+      </S.PlaylistItem>
     </>
   );
 }
