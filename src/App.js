@@ -1,13 +1,7 @@
-import Bar from "./components/Bar";
-import Sidebar from "./components/Sidebar";
-import Nav from "./components/Nav";
-import Centerblock from "./components/Centerblock";
-import Footer from "./components/Footer";
-import { useEffect, useState } from "react";
 import { createGlobalStyle } from "styled-components";
 import font1 from "./assets/fonts/StratosSkyeng.woff";
 import font2 from "./assets/fonts/StratosSkyeng.woff2";
-import * as S from "./components/Styles";
+import { AppRoutes } from "./routes";
 
 const GlobalStyle = createGlobalStyle`
 * {
@@ -53,28 +47,11 @@ a:visited {
 `;
 
 function App() {
-  const [loaded, setLoaded] = useState(false);
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoaded(true);
-    }, 4000);
-    return () => clearTimeout(timer);
-  }, []);
-
   return (
     <div className="App">
       <GlobalStyle />
-      <S.Wrapper>
-        <S.Container>
-          <S.Main>
-            <Nav loaded={loaded} />
-            <Centerblock loaded={loaded} />
-            <Sidebar loaded={loaded} />
-          </S.Main>
-          <Bar loaded={loaded} />
-          <Footer />
-        </S.Container>
-      </S.Wrapper>
+      <AppRoutes />
+      <GlobalStyle />
     </div>
   );
 }

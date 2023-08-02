@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import * as S from "./Styles";
+import { Link } from "react-router-dom";
 
 function Nav() {
   const [visible, setVisible] = useState(false);
@@ -22,13 +23,19 @@ function Nav() {
         <S.NavMenu>
           <S.MenuList>
             <S.MenuItem>
-              <S.MenuLink href="http://">Главное</S.MenuLink>
+              <Link to="/">
+                <S.MenuLink>Главное</S.MenuLink>
+              </Link>
             </S.MenuItem>
             <S.MenuItem>
-              <S.MenuLink href="http://">Мой плейлист</S.MenuLink>
+              <Link to="/favourites">
+                <S.MenuLink>Мой плейлист</S.MenuLink>
+              </Link>
             </S.MenuItem>
             <S.MenuItem>
-              <S.MenuLink href="http://">Войти</S.MenuLink>
+              <Link to="/login">
+                <S.MenuLink>Войти</S.MenuLink>
+              </Link>
             </S.MenuItem>
           </S.MenuList>
         </S.NavMenu>
