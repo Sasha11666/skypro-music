@@ -1,5 +1,6 @@
 import React from "react";
 import * as S from "./Styles";
+import { Link } from "react-router-dom";
 
 function Sidebar({ loaded }) {
   return (
@@ -11,25 +12,40 @@ function Sidebar({ loaded }) {
       <S.SidebarBlock>
         <S.SidebarList>
           <S.SidebarItem>
-            <S.SidebarLink href="#">
-              {loaded && (
-                <S.SidebarImg src="/img/playlist01.png" alt="day's playlist" />
-              )}
-            </S.SidebarLink>
+            <Link to="/category/1">
+              <S.SidebarLink>
+                {loaded && (
+                  <S.SidebarImg
+                    src="/img/playlist01.png"
+                    alt="day's playlist"
+                  />
+                )}
+              </S.SidebarLink>
+            </Link>
           </S.SidebarItem>
           <S.SidebarItem>
-            <S.SidebarLink href="#">
-              {loaded && (
-                <S.SidebarImg src="/img/playlist02.png" alt="day's playlist" />
-              )}
-            </S.SidebarLink>
+            <Link to="/category/2">
+              <S.SidebarLink>
+                {loaded && (
+                  <S.SidebarImg
+                    src="/img/playlist02.png"
+                    alt="day's playlist"
+                  />
+                )}
+              </S.SidebarLink>
+            </Link>
           </S.SidebarItem>
           <S.SidebarItem>
-            <S.SidebarLink href="#">
-              {loaded && (
-                <S.SidebarImg src="/img/playlist03.png" alt="day's playlist" />
-              )}
-            </S.SidebarLink>
+            <Link to="/category/3">
+              <S.SidebarLink href="#">
+                {loaded && (
+                  <S.SidebarImg
+                    src="/img/playlist03.png"
+                    alt="day's playlist"
+                  />
+                )}
+              </S.SidebarLink>
+            </Link>
           </S.SidebarItem>
         </S.SidebarList>
       </S.SidebarBlock>

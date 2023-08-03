@@ -86,7 +86,7 @@ export const MenuItem = styled.li`
   margin-bottom: 16px;
 `;
 
-export const MenuLink = styled.a`
+export const MenuLink = styled.div`
   color: #ffffff;
   font-weight: 400;
   font-size: 16px;
@@ -594,7 +594,7 @@ export const SidebarItem = styled.div`
   }
 `;
 
-export const SidebarLink = styled.a`
+export const SidebarLink = styled.div`
   width: 100%;
   height: 100%;
 `;
@@ -962,4 +962,17 @@ export const VolumeProgressLine = styled.input`
 
 export const Footer = styled.footer`
   height: 16px;
+`;
+
+export const PageWrapper = styled.div`
+  color: white;
+  text-align: center;
+  background-color: black;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  justify-content: center;
+  align-items: center;
 `;
