@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PlayItem from "./PlayItem";
 import * as S from "./Styles";
 
@@ -102,20 +102,43 @@ export const items = [
   },
 ];
 
-function Playlist({ loaded }) {
+function Playlist({ loaded, tracks, setShown, setCurrentTrack, error }) {
   return (
-    <S.ContentPlaylist>
-      {items.map(({ id, title, author, album, time }) => (
-        <PlayItem
-          key={id}
-          title={title}
-          author={author}
-          album={album}
-          time={time}
-          loaded={loaded}
-        />
-      ))}
-    </S.ContentPlaylist>
+    <>
+      {error && (
+        <p style={{ color: "#d9b6ff" }}>
+          Не удалось загрузить плейлист, попробуйте позже
+        </p>
+      )}
+      {!error && (
+        <S.ContentPlaylist>
+          {tracks
+            ? tracks.map(({ id, name, author, album, duration_in_seconds }) => (
+                <PlayItem
+                  key={id}
+                  id={id}
+                  title={name}
+                  author={author}
+                  album={album}
+                  time={duration_in_seconds}
+                  loaded={loaded}
+                  setShown={setShown}
+                  setCurrentTrack={setCurrentTrack}
+                />
+              ))
+            : items.map(({ id, title, author, album, time }) => (
+                <PlayItem
+                  key={id}
+                  title={title}
+                  author={author}
+                  album={album}
+                  time={time}
+                  loaded={loaded}
+                />
+              ))}
+        </S.ContentPlaylist>
+      )}
+    </>
   );
 }
 

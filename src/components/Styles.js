@@ -2,14 +2,14 @@ import styled from "styled-components";
 
 export const Wrapper = styled.div`
   width: 100%;
-  min-height: 100%;
+  height: 100vh;
   background-color: #383838;
 `;
 
 export const Container = styled.div`
   max-width: 1920px;
   margin: 0 auto;
-  position: relative;
+  // position: relative;
   background-color: #181818;
 `;
 
@@ -605,13 +605,14 @@ export const SidebarImg = styled.img`
 `;
 
 export const Bar = styled.div`
-  position: absolute;
+  position: fixed;
   bottom: 0;
   left: 0;
   width: 100%;
+  // height: ${(props) => (props.shown ? "auto" : "80px")};
   background: rgba(28, 28, 28, 0.5);
   @media (max-width: 1430px) {
-    position: relative;
+    position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;
@@ -831,7 +832,7 @@ export const TrackPlayAuthor = styled.div`
   -ms-grid-row: 1;
   -ms-grid-column: 2;
   grid-area: author;
-  min-width: 49px;
+  min-width: 120px;
   background-color: ${(props) => (!props.loaded ? "#313131" : "transparent")};
   width: ${(props) => (!props.loaded ? "170px" : "none")};
   height: ${(props) => (!props.loaded ? "14px" : "none")};
@@ -850,7 +851,7 @@ export const TrackPlayAlbum = styled.div`
   -ms-grid-row: 2;
   -ms-grid-column: 2;
   grid-area: album;
-  min-width: 49px;
+  min-width: 120px;
   background-color: ${(props) => (!props.loaded ? "#313131" : "transparent")};
   width: ${(props) => (!props.loaded ? "170px" : "none")};
   height: ${(props) => (!props.loaded ? "14px" : "none")};

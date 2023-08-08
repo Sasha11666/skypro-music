@@ -2,6 +2,8 @@ import { createGlobalStyle } from "styled-components";
 import font1 from "./assets/fonts/StratosSkyeng.woff";
 import font2 from "./assets/fonts/StratosSkyeng.woff2";
 import { AppRoutes } from "./routes";
+import { useEffect, useState } from "react";
+import { getTracks } from "./api";
 
 const GlobalStyle = createGlobalStyle`
 * {
@@ -29,7 +31,9 @@ const GlobalStyle = createGlobalStyle`
 html,
 body {
   width: 100%;
-  height: 100%;
+  min-height: 200vh;
+  background-color: #181818;;
+  // height: 100%;
   font-family: "StratosSkyeng", sans-serif;
   color: #ffffff;
 }
@@ -47,10 +51,26 @@ a:visited {
 `;
 
 function App() {
+  const [loaded, setLoaded] = useState(false);
+  const [tracks, setTracks] = useState("");
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    getTracks()
+      .then((tracks) => {
+        console.log(tracks);
+        setTracks(tracks);
+        setLoaded(true);
+      })
+      .catch((err) => {
+        setError(err.message);
+      });
+  }, []);
+
   return (
     <div className="App">
       <GlobalStyle />
-      <AppRoutes />
+      <AppRoutes tracks={tracks} loaded={loaded} error={error} />
       <GlobalStyle />
     </div>
   );
