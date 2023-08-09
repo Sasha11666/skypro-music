@@ -1,7 +1,27 @@
 import React from "react";
 import * as S from "./Styles";
 
-function PlayItem({ title, author, album, time, loaded }) {
+function PlayItem({
+  id,
+  title,
+  author,
+  album,
+  time,
+  loaded,
+  setShown,
+  setCurrentTrack,
+}) {
+  const showBar = () => {
+    setShown(true);
+    const track = {
+      title: title,
+      author: author,
+      album: album,
+      id: id,
+    };
+    setCurrentTrack(track);
+  };
+
   return (
     <>
       <S.PlaylistItem>
@@ -16,7 +36,7 @@ function PlayItem({ title, author, album, time, loaded }) {
             </S.TrackTitleImg>
             <S.TrackTitleText loaded={loaded}>
               {loaded && (
-                <S.TrackTitleLink href="http://">
+                <S.TrackTitleLink onClick={showBar}>
                   {title} <S.TrackTitleSpan></S.TrackTitleSpan>
                 </S.TrackTitleLink>
               )}
@@ -24,12 +44,12 @@ function PlayItem({ title, author, album, time, loaded }) {
           </S.TrackTitle>
           <S.TrackAuthor loaded={loaded}>
             {loaded && (
-              <S.TrackAuthorLink href="http://">{author}</S.TrackAuthorLink>
+              <S.TrackAuthorLink onClick={showBar}>{author}</S.TrackAuthorLink>
             )}
           </S.TrackAuthor>
           <S.TrackAlbum loaded={loaded}>
             {loaded && (
-              <S.TrackAlbumLink href="http://">{album}</S.TrackAlbumLink>
+              <S.TrackAlbumLink onClick={showBar}>{album}</S.TrackAlbumLink>
             )}
           </S.TrackAlbum>
           <div>
