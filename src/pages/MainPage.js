@@ -32,7 +32,12 @@ export const MainPage = ({ tracks, loaded, error }) => {
           />
           <Sidebar loaded={loaded} />
         </S.Main>
-        <Bar loaded={loaded} shown={shown} currentTrack={currentTrack} />
+        <Bar
+          loaded={loaded}
+          shown={shown}
+          currentTrack={currentTrack}
+          setCurrentTrack={setCurrentTrack}
+        />
         <Footer />
       </S.Container>
     </S.Wrapper>

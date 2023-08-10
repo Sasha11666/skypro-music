@@ -634,6 +634,14 @@ export const BarPlayerProgress = styled.div`
   width: 100%;
   height: 5px;
   background: #2e2e2e;
+  cursor: pointer;
+`;
+
+export const ColorPlayerProgress = styled.div`
+  width: 0;
+  height: 100%;
+  background-color: rgb(217, 182, 255);
+  border-radius: 30px;
 `;
 
 export const BarPlayerBlock = styled.div`
@@ -691,10 +699,12 @@ export const PlayerBtnPrev = styled.div`
 export const PlayerBtnPrevSvg = styled.svg`
   width: 15px;
   height: 14px;
+  cursor: pointer;
 `;
 
 export const PlayerBtnPlay = styled.div`
   margin-right: 23px;
+  cursor: pointer;
 `;
 
 export const PlayBtnPlaySvg = styled.svg`
@@ -720,6 +730,7 @@ export const PlayerBtnNextSvg = styled.svg`
   height: 14px;
   fill: inherit;
   stroke: #d9d9d9;
+  cursor: pointer;
 `;
 
 export const Svg = styled.svg``;
@@ -728,7 +739,7 @@ export const PlayerBtnRepeatSvg = styled(Svg)`
   width: 18px;
   height: 12px;
   fill: transparent;
-  stroke: #696969;
+  stroke: ${(props) => (props.loop ? "#fff" : "#696969")};
 `;
 
 export const PlayerBtnShuffleSvg = styled(Svg)`
@@ -877,6 +888,7 @@ export const TrackPlayLikeDis = styled.div`
   -ms-flex-align: center;
   align-items: center;
   margin-left: 26%;
+  margin-left: 24px;
 `;
 
 export const TrackPlayLikeSvg = styled(Svg)`
@@ -949,6 +961,7 @@ export const VolumeSvg = styled.svg`
   width: 13px;
   height: 18px;
   fill: transparent;
+  cursor: pointer;
 `;
 
 export const VolumeProgress = styled.div`
@@ -957,7 +970,8 @@ export const VolumeProgress = styled.div`
 `;
 
 export const VolumeProgressLine = styled.input`
-  width: 109px;
+  margin: 0;
+  width: 100%;
   cursor: pointer;
 `;
 
