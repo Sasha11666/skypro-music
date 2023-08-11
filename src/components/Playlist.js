@@ -102,7 +102,14 @@ export const items = [
   },
 ];
 
-function Playlist({ loaded, tracks, setShown, setCurrentTrack, error }) {
+function Playlist({
+  loaded,
+  tracks,
+  setShown,
+  setCurrentTrack,
+  error,
+  setIsplaying,
+}) {
   return (
     <>
       {error && (
@@ -133,6 +140,7 @@ function Playlist({ loaded, tracks, setShown, setCurrentTrack, error }) {
                     setShown={setShown}
                     setCurrentTrack={setCurrentTrack}
                     url={track_file}
+                    setIsplaying={setIsplaying}
                   />
                 )
               )

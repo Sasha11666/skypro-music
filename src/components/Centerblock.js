@@ -3,7 +3,14 @@ import Playlist from "./Playlist";
 import Filter from "./Filter";
 import * as S from "./Styles";
 
-function Centerblock({ loaded, tracks, setShown, setCurrentTrack, error }) {
+function Centerblock({
+  loaded,
+  tracks,
+  setShown,
+  setCurrentTrack,
+  error,
+  setIsplaying,
+}) {
   return (
     <S.MainCenterblock>
       <S.CenterblockSearch>
@@ -31,6 +38,7 @@ function Centerblock({ loaded, tracks, setShown, setCurrentTrack, error }) {
           setShown={setShown}
           setCurrentTrack={setCurrentTrack}
           error={error}
+          setIsplaying={setIsplaying}
         />
       </S.CenterblockContent>
     </S.MainCenterblock>

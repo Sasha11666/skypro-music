@@ -11,6 +11,7 @@ function PlayItem({
   setShown,
   setCurrentTrack,
   url,
+  setIsplaying,
 }) {
   const showBar = () => {
     setShown(true);
@@ -22,6 +23,7 @@ function PlayItem({
       url: url,
     };
     setCurrentTrack(track);
+    setIsplaying(true);
   };
 
   const formatTime = (time) => {

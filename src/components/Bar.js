@@ -1,21 +1,18 @@
 import React, { useEffect, useRef, useState } from "react";
 import Player from "./Player";
 
-function Bar({ loaded, shown, currentTrack, setCurrentTrack }) {
-  const [isplaying, setIsplaying] = useState(false);
+function Bar({
+  loaded,
+  shown,
+  currentTrack,
+  setCurrentTrack,
+  isplaying,
+  setIsplaying,
+}) {
   const [loopOn, setLoopOn] = useState(false);
   const [currentVolume, setCurrentVolume] = useState(0.5);
 
   const audioEl = useRef(null);
-
-  useEffect(() => {
-    setIsplaying(true);
-    audioEl.current.play();
-    setCurrentTrack({
-      ...currentTrack,
-      progress: 0,
-    });
-  }, [currentTrack.url]);
 
   useEffect(() => {
     if (isplaying) {
@@ -50,7 +47,12 @@ function Bar({ loaded, shown, currentTrack, setCurrentTrack }) {
 
   return (
     <>
-      <audio src={currentTrack.url} ref={audioEl} onTimeUpdate={onPlaying} />
+      <audio
+        src={currentTrack.url}
+        ref={audioEl}
+        onTimeUpdate={onPlaying}
+        autoplay="true"
+      />
       <Player
         loaded={loaded}
         shown={shown}

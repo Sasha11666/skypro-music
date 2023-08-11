@@ -10,6 +10,7 @@ import * as S from "../components/Styles";
 export const MainPage = ({ tracks, loaded, error }) => {
   const [shown, setShown] = useState(false);
   const [currentTrack, setCurrentTrack] = useState("");
+  const [isplaying, setIsplaying] = useState(false);
 
   // useEffect(() => {
   //   const timer = setTimeout(() => {
@@ -29,6 +30,7 @@ export const MainPage = ({ tracks, loaded, error }) => {
             setShown={setShown}
             setCurrentTrack={setCurrentTrack}
             error={error}
+            setIsplaying={setIsplaying}
           />
           <Sidebar loaded={loaded} />
         </S.Main>
@@ -37,6 +39,8 @@ export const MainPage = ({ tracks, loaded, error }) => {
           shown={shown}
           currentTrack={currentTrack}
           setCurrentTrack={setCurrentTrack}
+          isplaying={isplaying}
+          setIsplaying={setIsplaying}
         />
         <Footer />
       </S.Container>
