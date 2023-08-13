@@ -10,6 +10,8 @@ function PlayItem({
   loaded,
   setShown,
   setCurrentTrack,
+  url,
+  setIsplaying,
 }) {
   const showBar = () => {
     setShown(true);
@@ -18,8 +20,20 @@ function PlayItem({
       author: author,
       album: album,
       id: id,
+      url: url,
     };
     setCurrentTrack(track);
+    setIsplaying(true);
+  };
+
+  const formatTime = (time) => {
+    const minutes = Math.floor(time / 60);
+    let seconds = Math.floor(time) - minutes * 60;
+    if (seconds < 10) {
+      seconds = `0${seconds}`;
+    }
+    const formated = `${minutes} : ${seconds}`;
+    return formated;
   };
 
   return (
@@ -60,7 +74,7 @@ function PlayItem({
             )}
             {loaded && (
               <S.TrackTimeText className="track__time-text">
-                {time}
+                {formatTime(time)}
               </S.TrackTimeText>
             )}
           </div>

@@ -102,7 +102,14 @@ export const items = [
   },
 ];
 
-function Playlist({ loaded, tracks, setShown, setCurrentTrack, error }) {
+function Playlist({
+  loaded,
+  tracks,
+  setShown,
+  setCurrentTrack,
+  error,
+  setIsplaying,
+}) {
   return (
     <>
       {error && (
@@ -113,19 +120,30 @@ function Playlist({ loaded, tracks, setShown, setCurrentTrack, error }) {
       {!error && (
         <S.ContentPlaylist>
           {tracks
-            ? tracks.map(({ id, name, author, album, duration_in_seconds }) => (
-                <PlayItem
-                  key={id}
-                  id={id}
-                  title={name}
-                  author={author}
-                  album={album}
-                  time={duration_in_seconds}
-                  loaded={loaded}
-                  setShown={setShown}
-                  setCurrentTrack={setCurrentTrack}
-                />
-              ))
+            ? tracks.map(
+                ({
+                  id,
+                  name,
+                  author,
+                  album,
+                  duration_in_seconds,
+                  track_file,
+                }) => (
+                  <PlayItem
+                    key={id}
+                    id={id}
+                    title={name}
+                    author={author}
+                    album={album}
+                    time={duration_in_seconds}
+                    loaded={loaded}
+                    setShown={setShown}
+                    setCurrentTrack={setCurrentTrack}
+                    url={track_file}
+                    setIsplaying={setIsplaying}
+                  />
+                )
+              )
             : items.map(({ id, title, author, album, time }) => (
                 <PlayItem
                   key={id}
