@@ -14,9 +14,7 @@ export const AppRoutes = ({ tracks, loaded, error }) => {
       <Route path="/register" element={<RegisterPage />} />
       <Route
         element={
-          <ProtectedRoute
-            isAllowed={Boolean(localStorage.getItem("user") === "true")}
-          />
+          <ProtectedRoute isAllowed={Boolean(localStorage.getItem("user"))} />
         }
       >
         <Route

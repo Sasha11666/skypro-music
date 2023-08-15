@@ -1,13 +1,25 @@
 import React from "react";
 import * as S from "./Styles";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useUserContext } from "../App";
 
 function Sidebar({ loaded }) {
+  const { user } = useUserContext();
+  let navigate = useNavigate();
+  const exitFunc = () => {
+    localStorage.removeItem("user");
+    navigate("/login");
+  };
   return (
     <S.MainSidebar>
       <S.SidebarPersonal>
-        <S.SidebarPersonalName>Sergey.Ivanov</S.SidebarPersonalName>
-        <S.SidebarAvatar></S.SidebarAvatar>
+        <S.SidebarPersonalName>{user.username}</S.SidebarPersonalName>
+        <S.SidebarAvatar>
+          <S.SidebarAvatarSvg onClick={exitFunc}>
+            <use xlinkHref="/img/icon/sprite.svg#icon-exit"></use>
+          </S.SidebarAvatarSvg>
+        </S.SidebarAvatar>
       </S.SidebarPersonal>
       <S.SidebarBlock>
         <S.SidebarList>

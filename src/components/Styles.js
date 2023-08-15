@@ -552,6 +552,12 @@ export const SidebarAvatar = styled.div`
   height: 43px;
   background-color: #313131;
   border-radius: 50%;
+  cursor: pointer;
+`;
+
+export const SidebarAvatarSvg = styled.svg`
+  width: 100%;
+  height: 100%;
 `;
 
 export const SidebarBlock = styled.div`

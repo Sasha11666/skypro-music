@@ -42,7 +42,6 @@ function Bar({
       progress: (ct / duration) * 100,
       length: duration,
     });
-    console.log(currentTrack);
   };
 
   return (
@@ -51,7 +50,7 @@ function Bar({
         src={currentTrack.url}
         ref={audioEl}
         onTimeUpdate={onPlaying}
-        autoplay="true"
+        autoPlay={true}
       />
       <Player
         loaded={loaded}

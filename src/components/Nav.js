@@ -6,6 +6,10 @@ import { Link } from "react-router-dom";
 function Nav() {
   const [visible, setVisible] = useState(false);
 
+  const exitFunc = () => {
+    localStorage.removeItem("user");
+  };
+
   const toggleVisibility = () => setVisible(!visible);
 
   return (
@@ -34,7 +38,7 @@ function Nav() {
             </S.MenuItem>
             <S.MenuItem>
               <Link to="/login">
-                <S.MenuLink>Войти</S.MenuLink>
+                <S.MenuLink onClick={exitFunc}>Выйти</S.MenuLink>
               </Link>
             </S.MenuItem>
           </S.MenuList>
