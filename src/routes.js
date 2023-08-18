@@ -7,7 +7,7 @@ import NotFound from "./pages/NotFound";
 import CategoryPage from "./pages/CategoryPage";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 
-export const AppRoutes = ({ tracks, loaded, error }) => {
+export const AppRoutes = ({ loaded, error }) => {
   return (
     <Routes>
       <Route path="/login" element={<LoginPage />} />
@@ -17,10 +17,7 @@ export const AppRoutes = ({ tracks, loaded, error }) => {
           <ProtectedRoute isAllowed={Boolean(localStorage.getItem("user"))} />
         }
       >
-        <Route
-          path="/"
-          element={<MainPage tracks={tracks} loaded={loaded} error={error} />}
-        />
+        <Route path="/" element={<MainPage loaded={loaded} error={error} />} />
         <Route path="/favourites" element={<FavouritesPage />} />
         <Route path="/category/:id" element={<CategoryPage />} />
       </Route>

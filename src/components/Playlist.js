@@ -1,6 +1,7 @@
 import React from "react";
 import PlayItem from "./PlayItem";
 import * as S from "./Styles";
+import { useSelector } from "react-redux";
 
 export const items = [
   {
@@ -102,14 +103,8 @@ export const items = [
   },
 ];
 
-function Playlist({
-  loaded,
-  tracks,
-  setShown,
-  setCurrentTrack,
-  error,
-  setIsplaying,
-}) {
+function Playlist({ loaded, setShown, error }) {
+  const tracks = useSelector((state) => state.currentAlbum.value);
   return (
     <>
       {error && (
@@ -138,9 +133,7 @@ function Playlist({
                     time={duration_in_seconds}
                     loaded={loaded}
                     setShown={setShown}
-                    setCurrentTrack={setCurrentTrack}
                     url={track_file}
-                    setIsplaying={setIsplaying}
                   />
                 )
               )

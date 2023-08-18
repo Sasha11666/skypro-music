@@ -4,6 +4,8 @@ import font2 from "./assets/fonts/StratosSkyeng.woff2";
 import { AppRoutes } from "./routes";
 import { useEffect, useState, createContext, useContext } from "react";
 import { getTracks } from "./api";
+import { useDispatch } from "react-redux";
+import { setCurrentAlbum } from "./features/currentAlbum";
 
 const GlobalStyle = createGlobalStyle`
 * {
@@ -38,6 +40,35 @@ body {
   color: #ffffff;
 }
 
+@keyframes heartbeat {
+  from {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+    -webkit-transform-origin: center center;
+            transform-origin: center center;
+    -webkit-animation-timing-function: ease-out;
+            animation-timing-function: ease-out;
+  }
+  30% {
+    -webkit-transform: scale(0.80);
+            transform: scale(0.80);
+    -webkit-animation-timing-function: ease-in;
+            animation-timing-function: ease-in;
+  }
+  60% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+    -webkit-animation-timing-function: ease-out;
+            animation-timing-function: ease-out;
+  }
+  90% {
+    -webkit-transform: scale(1.2);
+            transform: scale(1.2);
+    -webkit-animation-timing-function: ease-out;
+            animation-timing-function: ease-out;
+  }
+}
+
 ul li {
   list-style: none;
 } 
@@ -58,8 +89,8 @@ export const useUserContext = () => {
 };
 
 function App() {
+  const dispatch = useDispatch();
   const [loaded, setLoaded] = useState(false);
-  const [tracks, setTracks] = useState("");
   const [error, setError] = useState(null);
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
 
@@ -68,7 +99,8 @@ function App() {
     setUser(JSON.parse(localStorage.getItem("user")));
     getTracks()
       .then((tracks) => {
-        setTracks(tracks);
+        dispatch(setCurrentAlbum(tracks));
+        console.log(tracks);
         setLoaded(true);
       })
       .catch((err) => {
@@ -80,12 +112,7 @@ function App() {
     <div className="App">
       <GlobalStyle />
       <UserContext.Provider value={{ user: user, setUser }}>
-        <AppRoutes
-          tracks={tracks}
-          loaded={loaded}
-          error={error}
-          setUser={setUser}
-        />
+        <AppRoutes loaded={loaded} error={error} setUser={setUser} />
       </UserContext.Provider>
       <GlobalStyle />
     </div>

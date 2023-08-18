@@ -7,17 +7,9 @@ import Centerblock from "../components/Centerblock";
 import Footer from "../components/Footer";
 import * as S from "../components/Styles";
 
-export const MainPage = ({ tracks, loaded, error }) => {
+export const MainPage = ({ loaded, error }) => {
   const [shown, setShown] = useState(false);
-  const [currentTrack, setCurrentTrack] = useState("");
-  const [isplaying, setIsplaying] = useState(false);
-
-  // useEffect(() => {
-  //   const timer = setTimeout(() => {
-  //     setLoaded(true);
-  //   }, 4000);
-  //   return () => clearTimeout(timer);
-  // }, []);
+  // const [isplaying, setIsplaying] = useState(false);
 
   return (
     <S.Wrapper>
@@ -26,22 +18,13 @@ export const MainPage = ({ tracks, loaded, error }) => {
           <Nav loaded={loaded} />
           <Centerblock
             loaded={loaded}
-            tracks={tracks}
             setShown={setShown}
-            setCurrentTrack={setCurrentTrack}
             error={error}
-            setIsplaying={setIsplaying}
+            // setIsplaying={setIsplaying}
           />
           <Sidebar loaded={loaded} />
         </S.Main>
-        <Bar
-          loaded={loaded}
-          shown={shown}
-          currentTrack={currentTrack}
-          setCurrentTrack={setCurrentTrack}
-          isplaying={isplaying}
-          setIsplaying={setIsplaying}
-        />
+        <Bar loaded={loaded} shown={shown} />
         <Footer />
       </S.Container>
     </S.Wrapper>
