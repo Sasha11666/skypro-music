@@ -1,20 +1,30 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import * as S from "./Styles";
 import VolumeProgress from "./VolumeProgress";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import {
+  skipNextTrack,
+  skipPrevTrack,
+  skipRandomTrack,
+} from "../features/currentTrack";
+import { setPlayingStatus } from "../features/playingStatus";
 
 function Player({
   loaded,
   shown,
-  currentTrack,
-  isplaying,
-  setIsplaying,
   audioEl,
   loopOn,
   setLoopOn,
   currentVolume,
   setCurrentVolume,
 }) {
+  const currentTrack = useSelector((state) => state.currentTrack.value);
+  const dispatch = useDispatch();
+  const tracks = useSelector((state) => state.currentAlbum.value);
   const progressRef = useRef(null);
+  const [mixed, setMixed] = useState(false);
+  const isplaying = useSelector((state) => state.playingStatus.value);
 
   const formatTime = (time) => {
     const minutes = Math.floor(time / 60);
@@ -27,7 +37,7 @@ function Player({
   };
 
   const PlayPause = () => {
-    setIsplaying(!isplaying);
+    dispatch(setPlayingStatus(!isplaying));
   };
 
   const LoopTrack = () => {
@@ -49,8 +59,26 @@ function Player({
     }
   };
 
-  const alertNotFinished = () => {
-    alert("Еще не реализовано");
+  function skipToPrev() {
+    if (mixed) {
+      dispatch(skipRandomTrack(tracks));
+    } else {
+      dispatch(skipPrevTrack(tracks));
+    }
+    dispatch(setPlayingStatus(true));
+  }
+
+  function skipToNext() {
+    if (mixed) {
+      dispatch(skipRandomTrack(tracks));
+    } else {
+      dispatch(skipNextTrack(tracks));
+    }
+    dispatch(setPlayingStatus(true));
+  }
+
+  const mixTracks = () => {
+    setMixed(!mixed);
   };
 
   return (
@@ -81,7 +109,7 @@ function Player({
               <S.BarPlayer>
                 <S.PlayerControls>
                   <S.PlayerBtnPrev>
-                    <S.PlayerBtnPrevSvg alt="prev" onClick={alertNotFinished}>
+                    <S.PlayerBtnPrevSvg alt="prev" onClick={skipToPrev}>
                       <use xlinkHref="/img/icon/sprite.svg#icon-prev"></use>
                     </S.PlayerBtnPrevSvg>
                   </S.PlayerBtnPrev>
@@ -97,7 +125,7 @@ function Player({
                     )}
                   </S.PlayerBtnPlay>
                   <S.PlayerBtnNext>
-                    <S.PlayerBtnNextSvg alt="next" onClick={alertNotFinished}>
+                    <S.PlayerBtnNextSvg alt="next" onClick={skipToNext}>
                       <use xlinkHref="/img/icon/sprite.svg#icon-next"></use>
                     </S.PlayerBtnNextSvg>
                   </S.PlayerBtnNext>
@@ -113,7 +141,8 @@ function Player({
                   <S.PlayerBtnShuffle>
                     <S.PlayerBtnShuffleSvg
                       alt="shuffle"
-                      onClick={alertNotFinished}
+                      shuffle={mixed}
+                      onClick={mixTracks}
                     >
                       <use xlinkHref="/img/icon/sprite.svg#icon-shuffle"></use>
                     </S.PlayerBtnShuffleSvg>

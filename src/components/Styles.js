@@ -413,6 +413,8 @@ export const TrackTitleSvg = styled.svg`
   height: 17px;
   fill: transparent;
   stroke: #4e4e4e;
+  animation: ${(props) =>
+    props.isplaying ? "heartbeat 1.5s ease-in-out infinite both" : "none"};
 `;
 
 export const TrackTitleText = styled.div`
@@ -752,7 +754,7 @@ export const PlayerBtnShuffleSvg = styled(Svg)`
   width: 19px;
   height: 12px;
   fill: transparent;
-  stroke: #696969;
+  stroke: ${(props) => (props.shuffle ? "#fff" : "#696969")};
 `;
 
 export const BtnIcon = styled.div`
