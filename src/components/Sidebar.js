@@ -9,6 +9,7 @@ function Sidebar({ loaded }) {
   let navigate = useNavigate();
   const exitFunc = () => {
     localStorage.removeItem("user");
+    localStorage.removeItem("token");
     navigate("/login");
   };
   return (

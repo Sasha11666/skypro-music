@@ -2,8 +2,10 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import * as S from "./AuthPage.styles";
 import { useEffect, useState } from "react";
-import { loginUser, registerUser } from "../api";
+import { getToken, loginUser, registerUser } from "../api";
 import { useUserContext } from "../App";
+import { setCurrentAlbumName } from "../features/currentAlbum";
+import { useDispatch } from "react-redux";
 
 export default function AuthPage({ isLoginMode = false }) {
   const { setUser } = useUserContext();
@@ -12,6 +14,7 @@ export default function AuthPage({ isLoginMode = false }) {
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
   const [disable, setDisable] = useState(false);
+  const dispatch = useDispatch();
   let navigate = useNavigate();
 
   const handleLogin = async () => {
@@ -24,7 +27,14 @@ export default function AuthPage({ isLoginMode = false }) {
       .then((data) => {
         setUser(data);
         localStorage.setItem("user", JSON.stringify(data));
+        dispatch(setCurrentAlbumName("main"));
         navigate("/");
+      })
+      .then(() => {
+        getToken(email, password).then((data) => {
+          localStorage.setItem("token", JSON.stringify(data));
+          localStorage.setItem("refreshToken", JSON.stringify(data.refresh));
+        });
       })
       .catch((err) => {
         setError(err.message);

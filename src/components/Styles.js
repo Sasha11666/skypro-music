@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 export const Wrapper = styled.div`
   width: 100%;
-  height: 100vh;
   background-color: #383838;
 `;
 
@@ -52,6 +51,7 @@ export const LogoImg = styled.img`
 export const NavBurger = styled.div`
   width: 20px;
   height: 36px;
+  cursor: pointer;
   padding: 13px 0;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -497,8 +497,9 @@ export const TrackTimeSvg = styled.svg`
   width: 14px;
   height: 12px;
   margin-right: 17px;
-  fill: transparent;
+  fill: ${(props) => (props.liked ? "rgb(217, 182, 255)" : "transparent")};
   stroke: #696969;
+  cursor: pointer;
 `;
 
 export const TrackTimeText = styled.span`

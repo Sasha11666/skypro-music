@@ -4,13 +4,32 @@ import { useDispatch } from "react-redux";
 import { setCurrentTrack } from "../features/currentTrack";
 import { useSelector } from "react-redux";
 import { setPlayingStatus } from "../features/playingStatus";
+import { setClickedStatus } from "../features/clickedStatus";
 import { useEffect } from "react";
 import { useState } from "react";
+import { addToFav, deleteFromFav, getFavTracks, updateToken } from "../api";
+import { setCurrentAlbumPlayer } from "../features/currentAlbum";
 
-function PlayItem({ id, title, author, album, time, loaded, setShown, url }) {
+function PlayItem({
+  id,
+  title,
+  author,
+  album,
+  time,
+  loaded,
+  setShown,
+  url,
+  likes,
+}) {
   const currentTrack = useSelector((state) => state.currentTrack.value);
+  const currentAlbumName = useSelector(
+    (state) => state.currentAlbum.value.name
+  );
   const isplaying = useSelector((state) => state.playingStatus.value);
+  const isClicked = useSelector((state) => state.clickedStatus.value);
+  const tracks = useSelector((state) => state.currentAlbum.value.tracks);
   const dispatch = useDispatch();
+  const [liked, setLiked] = useState(false);
   const showBar = () => {
     setShown(true);
     const track = {
@@ -22,7 +41,25 @@ function PlayItem({ id, title, author, album, time, loaded, setShown, url }) {
     };
     dispatch(setCurrentTrack(track));
     dispatch(setPlayingStatus(true));
+    dispatch(setCurrentAlbumPlayer(tracks));
   };
+
+  useEffect(() => {
+    if (currentAlbumName === "favourites") {
+      setLiked(true);
+    } else {
+      const found = Boolean(
+        likes?.find(
+          (x) =>
+            x.username === JSON.parse(localStorage.getItem("user")).username
+        )
+      );
+      console.log(found);
+      setLiked(found);
+    }
+  }, []);
+
+  useEffect(() => {}, [liked]);
 
   const formatTime = (time) => {
     const minutes = Math.floor(time / 60);
@@ -32,6 +69,70 @@ function PlayItem({ id, title, author, album, time, loaded, setShown, url }) {
     }
     const formated = `${minutes} : ${seconds}`;
     return formated;
+  };
+
+  const manageLikedTrack = (presentId) => {
+    if (presentId) {
+      setLiked(false);
+      deleteFromFav(id)
+        .then(() => {
+          dispatch(setClickedStatus(!isClicked));
+        })
+        .catch((err) => {
+          updateToken(
+            `${JSON.parse(localStorage.getItem("refreshToken"))}`
+          ).then((data) => {
+            localStorage.removeItem("token");
+            localStorage.setItem("token", JSON.stringify(data));
+            deleteFromFav(id).then(() => {
+              dispatch(setClickedStatus(!isClicked));
+            });
+          });
+        });
+    } else {
+      setLiked(true);
+      addToFav(id)
+        .then(() => {
+          dispatch(setClickedStatus(!isClicked));
+        })
+        .catch((err) => {
+          updateToken(
+            `${JSON.parse(localStorage.getItem("refreshToken"))}`
+          ).then((data) => {
+            localStorage.removeItem("token");
+            localStorage.setItem("token", JSON.stringify(data));
+            addToFav(id).then(() => {
+              dispatch(setClickedStatus(!isClicked));
+            });
+          });
+        });
+    }
+  };
+
+  const toggleLike = () => {
+    let presentObj;
+    let presentId;
+    getFavTracks()
+      .then((tracks) => {
+        presentObj = tracks.find((x) => x.id === id);
+        presentId = presentObj?.id;
+        manageLikedTrack(presentId);
+      })
+      .catch((err) => {
+        if (err) {
+          updateToken(
+            `${JSON.parse(localStorage.getItem("refreshToken"))}`
+          ).then((data) => {
+            localStorage.removeItem("token");
+            localStorage.setItem("token", JSON.stringify(data));
+            getFavTracks().then((tracks) => {
+              presentObj = tracks.find((x) => x.id === id);
+              presentId = presentObj?.id;
+              manageLikedTrack(presentId);
+            });
+          });
+        }
+      });
   };
 
   return (
@@ -74,7 +175,7 @@ function PlayItem({ id, title, author, album, time, loaded, setShown, url }) {
           </S.TrackAlbum>
           <div>
             {loaded && (
-              <S.TrackTimeSvg alt="time">
+              <S.TrackTimeSvg onClick={toggleLike} liked={liked} alt="time">
                 <use xlinkHref="/img/icon/sprite.svg#icon-like"></use>
               </S.TrackTimeSvg>
             )}
