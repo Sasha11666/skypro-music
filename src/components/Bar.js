@@ -9,7 +9,7 @@ function Bar({ loaded, shown }) {
   const [loopOn, setLoopOn] = useState(false);
   const [currentVolume, setCurrentVolume] = useState(0.5);
   const currentTrack = useSelector((state) => state.currentTrack.value);
-  const tracks = useSelector((state) => state.currentAlbum.value);
+  const tracks = useSelector((state) => state.currentAlbum.value.playerTracks);
   const isplaying = useSelector((state) => state.playingStatus.value);
   const dispatch = useDispatch();
 

@@ -8,49 +8,56 @@ export const currentTrackSlice = createSlice({
       state.value = action.payload;
     },
     skipPrevTrack: (state, action) => {
-      if (Number(state.value.id) > 8) {
-        let prevTrack = action.payload.filter(
-          (item) => Number(item.id) === Number(state.value.id) - 1
-        );
+      const index = Number(
+        action.payload.findIndex((x) => x.id === state.value.id)
+      );
+      console.log(index);
+      if (index > 0) {
+        const prevTrack = action.payload[index - 1];
+        // let prevTrack = action.payload.filter(
+        //   (item) => Number(item.id) === Number(state.value.id) - 1
+        // );
         state.value = {
-          title: prevTrack[0].name,
-          author: prevTrack[0].author,
-          album: prevTrack[0].album,
-          id: prevTrack[0].id,
-          url: prevTrack[0].track_file,
+          title: prevTrack.name,
+          author: prevTrack.author,
+          album: prevTrack.album,
+          id: prevTrack.id,
+          url: prevTrack.track_file,
         };
       } else {
         return;
       }
     },
     skipNextTrack: (state, action) => {
-      if (Number(state.value.id) < action.payload.length + 7) {
-        let nextTrack = action.payload.filter(
-          (item) => Number(item.id) === Number(state.value.id) + 1
-        );
+      const index = Number(
+        action.payload.findIndex((x) => x.id === state.value.id)
+      );
+      if (index < action.payload.length - 1) {
+        // let nextTrack = action.payload.filter(
+        //   (item) => Number(item.id) === Number(state.value.id) + 1
+        // );
+        const nextTrack = action.payload[index + 1];
         state.value = {
-          title: nextTrack[0].name,
-          author: nextTrack[0].author,
-          album: nextTrack[0].album,
-          id: nextTrack[0].id,
-          url: nextTrack[0].track_file,
+          title: nextTrack.name,
+          author: nextTrack.author,
+          album: nextTrack.album,
+          id: nextTrack.id,
+          url: nextTrack.track_file,
         };
       } else {
         return;
       }
     },
     skipRandomTrack: (state, action) => {
-      let id = Math.floor(Math.random() * (36 + 1));
-      if (id < 8) {
-        id += 8;
-      }
-      let randomTrack = action.payload.filter((item) => Number(item.id) === id);
+      let index = Math.floor(Math.random() * action.payload.length);
+      console.log(index);
+      let randomTrack = action.payload[index];
       state.value = {
-        title: randomTrack[0].name,
-        author: randomTrack[0].author,
-        album: randomTrack[0].album,
-        id: randomTrack[0].id,
-        url: randomTrack[0].track_file,
+        title: randomTrack.name,
+        author: randomTrack.author,
+        album: randomTrack.album,
+        id: randomTrack.id,
+        url: randomTrack.track_file,
       };
     },
   },

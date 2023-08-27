@@ -21,7 +21,7 @@ function Player({
 }) {
   const currentTrack = useSelector((state) => state.currentTrack.value);
   const dispatch = useDispatch();
-  const tracks = useSelector((state) => state.currentAlbum.value);
+  const tracks = useSelector((state) => state.currentAlbum.value.playerTracks);
   const progressRef = useRef(null);
   const [mixed, setMixed] = useState(false);
   const isplaying = useSelector((state) => state.playingStatus.value);

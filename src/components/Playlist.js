@@ -103,8 +103,9 @@ export const items = [
   },
 ];
 
-function Playlist({ loaded, setShown, error }) {
-  const tracks = useSelector((state) => state.currentAlbum.value);
+function Playlist({ loaded, setShown, error, loading }) {
+  const tracks = useSelector((state) => state.currentAlbum.value.tracks);
+
   return (
     <>
       {error && (
@@ -114,39 +115,47 @@ function Playlist({ loaded, setShown, error }) {
       )}
       {!error && (
         <S.ContentPlaylist>
-          {tracks
-            ? tracks.map(
-                ({
-                  id,
-                  name,
-                  author,
-                  album,
-                  duration_in_seconds,
-                  track_file,
-                }) => (
-                  <PlayItem
-                    key={id}
-                    id={id}
-                    title={name}
-                    author={author}
-                    album={album}
-                    time={duration_in_seconds}
-                    loaded={loaded}
-                    setShown={setShown}
-                    url={track_file}
-                  />
-                )
-              )
-            : items.map(({ id, title, author, album, time }) => (
-                <PlayItem
-                  key={id}
-                  title={title}
-                  author={author}
-                  album={album}
-                  time={time}
-                  loaded={loaded}
-                />
-              ))}
+          {!loading ? (
+            <div>
+              {tracks
+                ? tracks.map(
+                    ({
+                      id,
+                      name,
+                      author,
+                      album,
+                      duration_in_seconds,
+                      track_file,
+                      stared_user,
+                    }) => (
+                      <PlayItem
+                        key={id}
+                        id={id}
+                        title={name}
+                        author={author}
+                        album={album}
+                        time={duration_in_seconds}
+                        loaded={loaded}
+                        setShown={setShown}
+                        url={track_file}
+                        likes={stared_user}
+                      />
+                    )
+                  )
+                : items.map(({ id, title, author, album, time }) => (
+                    <PlayItem
+                      key={id}
+                      title={title}
+                      author={author}
+                      album={album}
+                      time={time}
+                      loaded={loaded}
+                    />
+                  ))}{" "}
+            </div>
+          ) : (
+            <p>Loading...</p>
+          )}
         </S.ContentPlaylist>
       )}
     </>

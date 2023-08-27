@@ -6,6 +6,8 @@ import { useEffect, useState, createContext, useContext } from "react";
 import { getTracks } from "./api";
 import { useDispatch } from "react-redux";
 import { setCurrentAlbum } from "./features/currentAlbum";
+import * as S from "./components/Styles";
+import Bar from "./components/Bar";
 
 const GlobalStyle = createGlobalStyle`
 * {
@@ -93,26 +95,37 @@ function App() {
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(null);
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
+  const [shown, setShown] = useState(false);
 
   useEffect(() => {
     console.log(JSON.parse(localStorage.getItem("user")));
     setUser(JSON.parse(localStorage.getItem("user")));
-    getTracks()
-      .then((tracks) => {
-        dispatch(setCurrentAlbum(tracks));
-        console.log(tracks);
-        setLoaded(true);
-      })
-      .catch((err) => {
-        setError(err.message);
-      });
+    // getTracks()
+    //   .then((tracks) => {
+    //     dispatch(setCurrentAlbum(tracks));
+    //     console.log(tracks);
+    //     setLoaded(true);
+    //   })
+    //   .catch((err) => {
+    //     setError(err.message);
+    //   });
   }, []);
 
   return (
     <div className="App">
       <GlobalStyle />
       <UserContext.Provider value={{ user: user, setUser }}>
-        <AppRoutes loaded={loaded} error={error} setUser={setUser} />
+        <>
+          <AppRoutes
+            loaded={loaded}
+            error={error}
+            setUser={setUser}
+            setError={setError}
+            setLoaded={setLoaded}
+            setShown={setShown}
+          />
+          <Bar loaded={loaded} shown={shown} />
+        </>
       </UserContext.Provider>
       <GlobalStyle />
     </div>
