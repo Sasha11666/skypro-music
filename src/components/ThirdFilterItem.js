@@ -1,6 +1,10 @@
 import React from "react";
-import { items } from "./Playlist";
 import * as S from "./Styles";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  addToGenresArray,
+  deleteFromGenresArray,
+} from "../features/filterGenre";
 
 function ThirdFilterItem({
   thirdShown,
@@ -8,14 +12,35 @@ function ThirdFilterItem({
   setfirstShown,
   setSecondShown,
 }) {
-  let itemsFiltered = [];
-  for (let i = 0; i < items.length; i++) {
-    if (!itemsFiltered.includes(items[i].genre)) {
-      itemsFiltered.push(items[i].genre);
-    } else {
-      i++;
+  const currentTracks = useSelector(
+    (state) => state.currentAlbum.value.unfilteredTracks
+  );
+  const tracks = useSelector((state) => state.currentAlbum.value.tracks);
+  const filteredGenres = useSelector((state) => state.filterGenre.value.genres);
+  const dispatch = useDispatch();
+  let uniqueTracks = [];
+  if (currentTracks) {
+    let uniqueGenres = [];
+    for (let i = 0; i < currentTracks.length; i++) {
+      if (!uniqueGenres.includes(String(currentTracks[i].genre))) {
+        uniqueGenres.push(String(currentTracks[i].genre));
+        uniqueTracks.push(currentTracks[i]);
+      } else {
+        i++;
+      }
     }
   }
+
+  const filterByGenre = (genre) => {
+    console.log(genre);
+    if (filteredGenres.includes(genre)) {
+      dispatch(deleteFromGenresArray(genre));
+      console.log("deleted");
+    } else {
+      dispatch(addToGenresArray(genre));
+      console.log("added");
+    }
+  };
 
   return (
     <S.FilterItem>
@@ -26,19 +51,34 @@ function ThirdFilterItem({
           setSecondShown(false);
         }}
         active={thirdShown}
-        // className="_btn-text"
       >
+        {filteredGenres.length > 0 ? (
+          <S.SelectedMark>{tracks.length}</S.SelectedMark>
+        ) : (
+          ""
+        )}
         жанру
       </S.FilterButton>
-      {thirdShown && (
-        <S.OptionsContainer>
-          {itemsFiltered.map((item, index) => (
-            <S.Option>
-              <S.OptionRadio type="radio" id={index} name="category" />
-              <label htmlFor={index}>{item}</label>
-            </S.Option>
-          ))}
-        </S.OptionsContainer>
+      {currentTracks ? (
+        <>
+          {thirdShown && (
+            <S.OptionsContainer>
+              {uniqueTracks.map(({ genre, id }) => (
+                <S.Option key={id} selected={filteredGenres.includes(genre)}>
+                  <S.OptionRadio
+                    type="radio"
+                    id={id}
+                    name="category"
+                    onClick={() => filterByGenre(genre)}
+                  />
+                  <label htmlFor={id}>{genre}</label>
+                </S.Option>
+              ))}
+            </S.OptionsContainer>
+          )}
+        </>
+      ) : (
+        ""
       )}
     </S.FilterItem>
   );

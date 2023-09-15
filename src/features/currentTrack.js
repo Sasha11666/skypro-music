@@ -11,12 +11,8 @@ export const currentTrackSlice = createSlice({
       const index = Number(
         action.payload.findIndex((x) => x.id === state.value.id)
       );
-      console.log(index);
       if (index > 0) {
         const prevTrack = action.payload[index - 1];
-        // let prevTrack = action.payload.filter(
-        //   (item) => Number(item.id) === Number(state.value.id) - 1
-        // );
         state.value = {
           title: prevTrack.name,
           author: prevTrack.author,
@@ -33,9 +29,6 @@ export const currentTrackSlice = createSlice({
         action.payload.findIndex((x) => x.id === state.value.id)
       );
       if (index < action.payload.length - 1) {
-        // let nextTrack = action.payload.filter(
-        //   (item) => Number(item.id) === Number(state.value.id) + 1
-        // );
         const nextTrack = action.payload[index + 1];
         state.value = {
           title: nextTrack.name,
@@ -50,7 +43,6 @@ export const currentTrackSlice = createSlice({
     },
     skipRandomTrack: (state, action) => {
       let index = Math.floor(Math.random() * action.payload.length);
-      console.log(index);
       let randomTrack = action.payload[index];
       state.value = {
         title: randomTrack.name,

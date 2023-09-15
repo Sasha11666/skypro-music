@@ -23,8 +23,7 @@ function FavouritesPage({ loaded, error, setLoaded, setError, setShown }) {
         setLoaded(true);
       })
       .catch((err) => {
-        console.log(err);
-        if (err) {
+        if (err.name === "AuthenticationError") {
           updateToken(
             `${JSON.parse(localStorage.getItem("refreshToken"))}`
           ).then((data) => {
@@ -37,6 +36,8 @@ function FavouritesPage({ loaded, error, setLoaded, setError, setShown }) {
               setLoaded(true);
             });
           });
+        } else {
+          setError(err.message);
         }
       });
   };

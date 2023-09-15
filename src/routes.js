@@ -41,7 +41,18 @@ export const AppRoutes = ({ loaded, error, setShown, setError, setLoaded }) => {
             />
           }
         />
-        <Route path="/category/:id" element={<CategoryPage />} />
+        <Route
+          path="/category/:id"
+          element={
+            <CategoryPage
+              loaded={loaded}
+              error={error}
+              setShown={setShown}
+              setLoaded={setLoaded}
+              setError={setError}
+            />
+          }
+        />
       </Route>
       <Route path="*" element={<NotFound />} />
     </Routes>

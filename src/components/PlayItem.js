@@ -28,6 +28,7 @@ function PlayItem({
   const isplaying = useSelector((state) => state.playingStatus.value);
   const isClicked = useSelector((state) => state.clickedStatus.value);
   const tracks = useSelector((state) => state.currentAlbum.value.tracks);
+  const likedId = useSelector((state) => state.likedStatus.value);
   const dispatch = useDispatch();
   const [liked, setLiked] = useState(false);
   const showBar = () => {
@@ -54,12 +55,17 @@ function PlayItem({
             x.username === JSON.parse(localStorage.getItem("user")).username
         )
       );
-      console.log(found);
       setLiked(found);
     }
   }, []);
 
-  useEffect(() => {}, [liked]);
+  useEffect(() => {
+    if (likedId.liked === id) {
+      setLiked(true);
+    } else if (likedId.disliked === id) {
+      setLiked(false);
+    }
+  }, [likedId]);
 
   const formatTime = (time) => {
     const minutes = Math.floor(time / 60);
@@ -173,7 +179,7 @@ function PlayItem({
               <S.TrackAlbumLink onClick={showBar}>{album}</S.TrackAlbumLink>
             )}
           </S.TrackAlbum>
-          <div>
+          <S.TrackTimeBlock>
             {loaded && (
               <S.TrackTimeSvg onClick={toggleLike} liked={liked} alt="time">
                 <use xlinkHref="/img/icon/sprite.svg#icon-like"></use>
@@ -184,7 +190,7 @@ function PlayItem({
                 {formatTime(time)}
               </S.TrackTimeText>
             )}
-          </div>
+          </S.TrackTimeBlock>
         </S.PlaylistTrack>
       </S.PlaylistItem>
     </>
@@ -192,3 +198,5 @@ function PlayItem({
 }
 
 export default PlayItem;
+
+// Boolean(liked === id)

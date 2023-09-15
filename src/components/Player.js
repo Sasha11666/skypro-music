@@ -9,6 +9,9 @@ import {
   skipRandomTrack,
 } from "../features/currentTrack";
 import { setPlayingStatus } from "../features/playingStatus";
+import { setLikedStatus, setDislikedStatus } from "../features/likedStatus";
+import { addToFav, deleteFromFav, updateToken } from "../api";
+import { setClickedStatus } from "../features/clickedStatus";
 
 function Player({
   loaded,
@@ -20,11 +23,13 @@ function Player({
   setCurrentVolume,
 }) {
   const currentTrack = useSelector((state) => state.currentTrack.value);
-  const dispatch = useDispatch();
   const tracks = useSelector((state) => state.currentAlbum.value.playerTracks);
+  const dispatch = useDispatch();
   const progressRef = useRef(null);
   const [mixed, setMixed] = useState(false);
   const isplaying = useSelector((state) => state.playingStatus.value);
+  const likedStatus = useSelector((state) => state.likedStatus.value);
+  const isClicked = useSelector((state) => state.clickedStatus.value);
 
   const formatTime = (time) => {
     const minutes = Math.floor(time / 60);
@@ -34,6 +39,50 @@ function Player({
     }
     const formated = `${minutes} : ${seconds}`;
     return formated;
+  };
+
+  const setLiked = () => {
+    if (String(likedStatus.disliked) === String(currentTrack.id)) {
+      dispatch(setDislikedStatus(""));
+    }
+    dispatch(setLikedStatus(currentTrack.id));
+    addToFav(currentTrack.id)
+      .then(() => {
+        dispatch(setClickedStatus(!isClicked));
+      })
+      .catch((err) => {
+        updateToken(`${JSON.parse(localStorage.getItem("refreshToken"))}`).then(
+          (data) => {
+            localStorage.removeItem("token");
+            localStorage.setItem("token", JSON.stringify(data));
+            addToFav(currentTrack.id).then(() => {
+              dispatch(setClickedStatus(!isClicked));
+            });
+          }
+        );
+      });
+  };
+
+  const setDisliked = () => {
+    if (String(likedStatus.liked) === String(currentTrack.id)) {
+      dispatch(setLikedStatus(""));
+    }
+    dispatch(setDislikedStatus(currentTrack.id));
+    deleteFromFav(currentTrack.id)
+      .then(() => {
+        dispatch(setClickedStatus(!isClicked));
+      })
+      .catch((err) => {
+        updateToken(`${JSON.parse(localStorage.getItem("refreshToken"))}`).then(
+          (data) => {
+            localStorage.removeItem("token");
+            localStorage.setItem("token", JSON.stringify(data));
+            deleteFromFav(currentTrack.id).then(() => {
+              dispatch(setClickedStatus(!isClicked));
+            });
+          }
+        );
+      });
   };
 
   const PlayPause = () => {
@@ -175,12 +224,12 @@ function Player({
                   </S.TrackPlayContain>
 
                   <S.TrackPlayLikeDis>
-                    <S.TrackPlayLike>
+                    <S.TrackPlayLike onClick={setLiked}>
                       <S.TrackPlayLikeSvg alt="like">
                         <use xlinkHref="/img/icon/sprite.svg#icon-like"></use>
                       </S.TrackPlayLikeSvg>
                     </S.TrackPlayLike>
-                    <S.TrackPlayDislike>
+                    <S.TrackPlayDislike onClick={setDisliked}>
                       <S.TrackPlayDislikeSvg alt="dislike">
                         <use xlinkHref="/img/icon/sprite.svg#icon-dislike"></use>
                       </S.TrackPlayDislikeSvg>
