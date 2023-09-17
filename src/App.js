@@ -3,10 +3,6 @@ import font1 from "./assets/fonts/StratosSkyeng.woff";
 import font2 from "./assets/fonts/StratosSkyeng.woff2";
 import { AppRoutes } from "./routes";
 import { useEffect, useState, createContext, useContext } from "react";
-import { getTracks } from "./api";
-import { useDispatch } from "react-redux";
-import { setCurrentAlbum } from "./features/currentAlbum";
-import * as S from "./components/Styles";
 import Bar from "./components/Bar";
 
 const GlobalStyle = createGlobalStyle`
@@ -91,24 +87,13 @@ export const useUserContext = () => {
 };
 
 function App() {
-  const dispatch = useDispatch();
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(null);
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
   const [shown, setShown] = useState(false);
 
   useEffect(() => {
-    console.log(JSON.parse(localStorage.getItem("user")));
     setUser(JSON.parse(localStorage.getItem("user")));
-    // getTracks()
-    //   .then((tracks) => {
-    //     dispatch(setCurrentAlbum(tracks));
-    //     console.log(tracks);
-    //     setLoaded(true);
-    //   })
-    //   .catch((err) => {
-    //     setError(err.message);
-    //   });
   }, []);
 
   return (

@@ -8,6 +8,11 @@ import currentTrackReducer from "./features/currentTrack";
 import currentAlbumReducer from "./features/currentAlbum";
 import playingStatusReducer from "./features/playingStatus";
 import clickedStatusReducer from "./features/clickedStatus";
+import likedStatusReducer from "./features/likedStatus";
+import filterStatusReducer from "./features/filterStatus";
+import filterAuthorReducer from "./features/filterAuthor";
+import filterGenreReducer from "./features/filterGenre";
+import sortTracksReducer from "./features/sortTrack";
 
 const store = configureStore({
   reducer: {
@@ -15,6 +20,11 @@ const store = configureStore({
     currentAlbum: currentAlbumReducer,
     playingStatus: playingStatusReducer,
     clickedStatus: clickedStatusReducer,
+    likedStatus: likedStatusReducer,
+    filterStatus: filterStatusReducer,
+    filterAuthor: filterAuthorReducer,
+    filterGenre: filterGenreReducer,
+    sortTracks: sortTracksReducer,
   },
 });
 

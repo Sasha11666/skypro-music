@@ -101,7 +101,7 @@ export const MainCenterblock = styled.div`
   -webkit-box-flex: 3;
   -ms-flex-positive: 3;
   flex-grow: 3;
-  padding: 20px 40px 20px 40px;
+  padding: 20px 0px 20px 40px;
 `;
 
 export const CenterblockSearch = styled.div`
@@ -227,20 +227,20 @@ export const PlaylistTitle = styled.div`
 `;
 
 export const PlaylistTitle1 = styled(PlaylistTitle)`
-  max-width: 447px;
+  width: 160px;
 `;
 
 export const PlaylistTitle2 = styled(PlaylistTitle)`
-  max-width: 321px;
+  width: 160px;
 `;
 
 export const PlaylistTitle3 = styled(PlaylistTitle)`
-  max-width: 245px;
+  width: 160px;
 `;
 
 export const PlaylistTitle4 = styled(PlaylistTitle)`
-  max-width: 60px;
-  text-align: end;
+  width: 160px;
+  text-align: start;
 `;
 
 export const PlaylistTitleSvg = styled.svg`
@@ -309,13 +309,13 @@ export const FilterButton = styled(Button)`
 export const OptionsContainer = styled.div`
   position: absolute;
   top: 50px;
-  width: 200px;
+  width: 180px;
   background-color: #2f3640;
   color: #f5f6fa;
   transition: all 0.4s;
   border-radius: 8px;
   opacity: 1;
-  max-height: 250px;
+  max-height: 180px;
   overflow-y: scroll;
   padding: 12px;
   font-size: 14px;
@@ -331,10 +331,23 @@ export const OptionsContainer = styled.div`
 `;
 
 export const Option = styled.div`
-  margin-bottom: 8px;
+  margin-bottom: 18px;
   :hover {
     color: #d9b6ff;
   }
+  color: ${(props) => (props.selected ? "#d9b6ff" : "#ffffff")};
+`;
+
+export const SelectedMark = styled.div`
+  width: 26px;
+  height: 26px;
+  border-radius: 50px;
+  background-color: #ad61ff;
+  color: white;
+  position: absolute;
+  top: -5px;
+  right: 0px;
+  text-align: center;
 `;
 
 export const OptionRadio = styled.input`
@@ -385,10 +398,7 @@ export const TrackTitle = styled.div`
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  width: 447px;
-  @media (max-width: 1430px) {
-    width: 160px;
-  }
+  width: 160px;
 `;
 
 export const TrackTitleImg = styled.div`
@@ -446,7 +456,7 @@ export const TrackTitleSpan = styled.span`
 `;
 
 export const TrackAuthor = styled.div`
-  width: ${(props) => (!props.loaded ? "321px" : "none")};
+  width: ${(props) => (!props.loaded ? "160px" : "160px")};
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -455,9 +465,6 @@ export const TrackAuthor = styled.div`
   justify-content: flex-start;
   background-color: ${(props) => (!props.loaded ? "#313131" : "transparent")};
   height: ${(props) => (!props.loaded ? "14px" : "none")};
-  @media (max-width: 1430px) {
-    width: 160px;
-  }
 `;
 
 export const TrackAuthorLink = styled.a`
@@ -473,13 +480,9 @@ export const TrackAuthorLink = styled.a`
 `;
 
 export const TrackAlbum = styled.div`
-  width: 245px;
-  width: ${(props) => (!props.loaded ? "245px" : "none")};
+  width: ${(props) => (!props.loaded ? "160px" : "160px")};
   background-color: ${(props) => (!props.loaded ? "#313131" : "transparent")};
   height: ${(props) => (!props.loaded ? "14px" : "none")};
-  @media (max-width: 1430px) {
-    width: 140px;
-  }
 `;
 
 export const TrackAlbumLink = styled.a`
@@ -502,6 +505,10 @@ export const TrackTimeSvg = styled.svg`
   cursor: pointer;
 `;
 
+export const TrackTimeBlock = styled.div`
+  width: 160px;
+`;
+
 export const TrackTimeText = styled.span`
   font-style: normal;
   font-weight: 400;
@@ -514,6 +521,7 @@ export const TrackTimeText = styled.span`
 export const MainSidebar = styled.div`
   width: 418px;
   padding: 20px 90px 20px 78px;
+  margin-right: 40px;
   @media (max-width: 1430px) {
     width: 218px;
     padding: 20px 60px 20px 58px;

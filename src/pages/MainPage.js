@@ -4,12 +4,11 @@ import Sidebar from "../components/Sidebar";
 import Nav from "../components/Nav";
 import Centerblock from "../components/Centerblock";
 import * as S from "../components/Styles";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { getTracks } from "../api";
-import { setCurrentAlbum } from "../features/currentAlbum";
+import { setCurrentAlbum, setCurrentAlbumName } from "../features/currentAlbum";
 
 export const MainPage = ({ loaded, error, setLoaded, setError, setShown }) => {
-  const currentTrack = useSelector((state) => state.currentTrack.value);
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
 
@@ -18,6 +17,7 @@ export const MainPage = ({ loaded, error, setLoaded, setError, setShown }) => {
     getTracks()
       .then((tracks) => {
         dispatch(setCurrentAlbum(tracks));
+        dispatch(setCurrentAlbumName("main"));
         setLoading(false);
         setLoaded(true);
       })
@@ -25,12 +25,6 @@ export const MainPage = ({ loaded, error, setLoaded, setError, setShown }) => {
         setError(err.message);
       });
   }, []);
-
-  useEffect(() => {
-    if (currentTrack) {
-      setShown(true);
-    }
-  }, [currentTrack]);
 
   return (
     <S.Wrapper>
